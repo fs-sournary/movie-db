@@ -1,0 +1,87 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+androidExtensions {
+    experimental = true
+}
+
+android {
+    compileSdkVersion build_version.target_sdk
+    defaultConfig {
+        applicationId "framgia.com.moviedbkotlin"
+        minSdkVersion build_version.min_sdk
+        targetSdkVersion build_version.target_sdk
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "API_KEY", "\"${API_KEY}\"")
+        buildConfigField("String", "BASE_URL", "\"${BASE_URL}\"")
+        buildConfigField("String", "BASE_IMAGE_URL", "\"${BASE_IMAGE_URL}\"")
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    dataBinding {
+        enabled = true
+    }
+}
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation des.kotlin.stdlib
+
+    // support library
+    implementation des.supports.app_compat
+    implementation des.supports.design
+    implementation des.supports.constraint_layout
+
+    // Room
+    implementation des.rooms.runtime
+    implementation des.rooms.rxjava2
+    kapt des.rooms.compiler
+
+    // Glide
+    implementation des.glide.runtime
+    kapt des.glide.compiler
+
+    // data binding
+    kapt des.binding
+
+    // rx
+    implementation des.reactive.rxjava2
+    implementation des.reactive.rxandroid
+    implementation des.reactive.rxkotlin
+
+    // retrofit
+    implementation des.retrofit.runtime
+    implementation des.retrofit.gson
+    implementation des.retrofit.adapter
+
+    // koin
+    implementation des.koin.core
+    implementation des.koin.android
+    implementation des.koin.viewmodel
+
+    // Paging
+    implementation des.paging.runtime
+    implementation des.paging.rxjava2
+
+    // Interceptor
+    implementation des.okhttp_logging_interceptor
+
+    // Navigation
+    implementation des.navigation.fragment
+    implementation des.navigation.ui
+    kapt des.navigation.testing
+
+    // test
+    testImplementation des.junit
+    androidTestImplementation des.runner
+    androidTestImplementation des.espresso.core
+}

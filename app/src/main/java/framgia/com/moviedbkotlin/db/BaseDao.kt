@@ -1,0 +1,25 @@
+package framgia.com.moviedbkotlin.db
+
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.Update
+
+/**
+ * Created: 12/16/18.
+ * By: Sang
+ * Description: Base dao class reduce the amount of boilerplate code
+ */
+interface BaseDao<T> {
+
+    @Insert
+    fun insert(obj: T)
+
+    @Insert
+    fun insert(vararg obj: T)
+
+    @Update
+    fun update(obj: T)
+
+    @Delete
+    fun delete(obj: T)
+}

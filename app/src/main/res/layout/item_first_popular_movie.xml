@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="framgia.com.moviedbkotlin.BuildConfig" />
+
+        <variable
+            name="movie"
+            type="framgia.com.moviedbkotlin.data.Movie" />
+
+        <variable
+            name="userActionListener"
+            type="framgia.com.moviedbkotlin.ui.home.HomeActionListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="@dimen/dp_240"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="@dimen/dp_4"
+        android:layout_marginTop="@dimen/dp_4"
+        android:layout_marginBottom="@dimen/dp_4"
+        android:onClick="@{() -> userActionListener.clickPopularMovieItem(movie)}">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/image_thumbnail"
+            centerCrop="@{true}"
+            imageUrl="@{BuildConfig.BASE_IMAGE_URL + `/` + movie.posterPath}"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:background="@drawable/header_main" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

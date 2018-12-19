@@ -1,0 +1,130 @@
+def versions = [:]
+versions.arch_core = "1.1.1"
+versions.support = "1.0.0"
+versions.android_gradle_plugin = '3.2.1'
+versions.room = "2.0.0"
+versions.lifecycle = "2.0.0"
+versions.arch_core = "1.1.1"
+versions.retrofit = "2.4.0"
+versions.okhttp_logging_interceptor = "3.9.0"
+versions.dagger = "2.16"
+versions.espresso = "3.1.0"
+versions.mockito = "2.7.19"
+versions.mockito_all = "1.10.19"
+versions.kotlin = "1.2.51"
+versions.glide = "4.7.1"
+versions.constraint_layout = "1.1.2"
+versions.junit = "4.12"
+versions.rxjava2 = "2.1.17"
+versions.rxandroid = "2.0.2"
+versions.rxkotlin = "2.2.0"
+versions.runner = "1.1.0"
+versions.easy_permission = "1.2.0"
+versions.koin = "1.0.2"
+versions.navigation = "1.0.0-alpha08"
+versions.paging = "2.1.0-rc01"
+
+def supports = [:]
+supports.app_compat = "androidx.appcompat:appcompat:$versions.support"
+supports.design = "com.google.android.material:material:$versions.support"
+supports.constraint_layout =
+        "androidx.constraintlayout:constraintlayout:$versions.constraint_layout"
+
+def rooms = [:]
+rooms.runtime = "androidx.room:room-runtime:$versions.room"
+rooms.compiler = "androidx.room:room-compiler:$versions.room"
+rooms.rxjava2 = "androidx.room:room-rxjava2:$versions.room"
+rooms.testing = "androidx.room:room-testing:$versions.testing"
+
+def lifecycle = [:]
+lifecycle.runtime = "androidx.lifecycle:lifecycle-runtime:$versions.lifecycle"
+lifecycle.extensions = "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle"
+lifecycle.compiler = "androidx.lifecycle:lifecycle-compiler:$versions.lifecycle"
+
+def retrofit = [:]
+retrofit.runtime = "com.squareup.retrofit2:retrofit:$versions.retrofit"
+retrofit.gson = "com.squareup.retrofit2:converter-gson:$versions.retrofit"
+retrofit.mock = "com.squareup.retrofit2:retrofit-mock:$versions.retrofit"
+retrofit.adapter = "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit"
+
+def daggers = [:]
+daggers.runtime = "com.google.dagger:dagger:$versions.dagger"
+daggers.android = "com.google.dagger:dagger-android:$versions.dagger"
+daggers.android_support = "com.google.dagger:dagger-android-support:$versions.dagger"
+daggers.compiler = "com.google.dagger:dagger-compiler:$versions.dagger"
+daggers.support_compiler = "com.google.dagger:dagger-android-processor:$versions.dagger"
+
+def espressos = [:]
+espressos.core = "androidx.test.espresso:espresso-core:$versions.espresso"
+espressos.intents = "androidx.test.espresso:espresso-intents:$versions.espresso"
+
+def mockito = [:]
+mockito.core = "org.mockito:mockito-core:$versions.mockito"
+mockito.all = "org.mockito:mockito-all:$versions.mockito_all"
+
+def kotlin = [:]
+kotlin.stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versions.kotlin"
+kotlin.test = "org.jetbrains.kotlin:kotlin-test-junit:$versions.kotlin"
+kotlin.plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
+kotlin.allopen = "org.jetbrains.kotlin:kotlin-allopen:$versions.kotlin"
+
+def glides = [:]
+glides.runtime = "com.github.bumptech.glide:glide:$versions.glide"
+glides.compiler = "com.github.bumptech.glide:compiler:$versions.glide"
+
+def reactive = [:]
+reactive.rxjava2 = "io.reactivex.rxjava2:rxjava:$versions.rxjava2"
+reactive.rxandroid = "io.reactivex.rxjava2:rxandroid:$versions.rxandroid"
+reactive.rxkotlin = "io.reactivex.rxjava2:rxkotlin:$versions.rxkotlin"
+
+def koin = [:]
+koin.core = "org.koin:koin-core:$versions.koin"
+koin.android = "org.koin:koin-android:$versions.koin"
+koin.viewmodel = "org.koin:koin-androidx-viewmodel:$versions.koin"
+
+def navigation = [:]
+navigation.fragment = "android.arch.navigation:navigation-fragment-ktx:$versions.navigation"
+navigation.ui = "android.arch.navigation:navigation-ui-ktx:$versions.navigation"
+navigation.testing = "android.arch.navigation:navigation-testing:$versions.navigation"
+
+def paging = [:]
+paging.runtime = "androidx.paging:paging-runtime-ktx:$versions.paging"
+paging.rxjava2 = "androidx.paging:paging-rxjava2-ktx:$versions.paging"
+
+def des = [:]
+des.supports = supports
+des.binding = "androidx.databinding:databinding-compiler:$versions.android_gradle_plugin"
+des.rooms = rooms
+des.lifecycle = lifecycle
+des.arch_core = "android.arch.core:core-testing:$versions.arch_core"
+des.retrofit = retrofit
+des.okhttp_logging_interceptor = "com.squareup.okhttp3:logging-interceptor:$versions.okhttp_logging_interceptor"
+des.dagger = daggers
+des.espresso = espressos
+des.mockito = mockito
+des.kotlin = kotlin
+des.koin = koin
+des.glide = glides
+des.junit = "junit:junit:$versions.junit"
+des.reactive = reactive
+des.runner = "androidx.test:runner:$versions.runner"
+des.android_gradle_plugin = "com.android.tools.build:gradle:$versions.android_gradle_plugin"
+des.permission = "pub.devrel:easypermissions:$versions.easy_permission"
+des.navigation = navigation
+des.paging = paging
+
+def build_version = [:]
+build_version.min_sdk = 21
+build_version.target_sdk = 28
+build_version.build_tools = "28.0.3"
+
+ext.des = des
+ext.build_version = build_version
+
+static def addRepos(RepositoryHandler handler) {
+    handler.google()
+    handler.jcenter()
+    handler.maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+}
+
+ext.addRepos = this.&addRepos

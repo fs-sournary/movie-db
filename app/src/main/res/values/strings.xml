@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">MovieDbKotlin</string>
+
+    <!--Menu -->
+    <string name="home">Home</string>
+    <string name="library">Library</string>
+    <string name="watch_list">Watch list</string>
+    <string name="account">Account</string>
+
+    <!-- network state item -->
+    <string name="retry">Retry</string>
+
+    <!-- main activity -->
+    <string name="toolbar_main_title"><![CDATA[<font color="#FFFFFF">Movie Db</font> <font color="red">Movie &amp; TV</font>]]></string>
+    <string name="popular">Popular</string>
+    <string name="top_rate">Top rate</string>
+    <string name="now_playing">Now playing</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="mood_for_question">What are you in the mood for ?</string>
+    <string name="browser_movie">Browser by genre and discover something new</string>
+</resources>

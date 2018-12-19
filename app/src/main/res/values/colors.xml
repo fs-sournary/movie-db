@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_deep_purple_50_500">#673AB7</color>
+    <color name="purple_100">#B88DF6</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="nero">#252525</color>
+    <color name="crimson">#E52750</color>
+    <color name="ic_launcher_background">#00000000</color>
+    <color name="plum">#2C1130</color>
+</resources>

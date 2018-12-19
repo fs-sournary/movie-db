@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/fragment_home"
+        android:icon="@drawable/ic_popular"
+        android:title="@string/home" />
+
+    <item
+        android:id="@+id/fragment_library"
+        android:icon="@drawable/ic_library_24dp"
+        android:title="@string/library" />
+
+    <item
+        android:id="@+id/fragment_watch_list"
+        android:icon="@drawable/ic_watch_list_24dp"
+        android:title="@string/watch_list" />
+
+    <item
+        android:id="@+id/fragment_account"
+        android:icon="@drawable/ic_account_24dp"
+        android:title="@string/account" />
+</menu>
