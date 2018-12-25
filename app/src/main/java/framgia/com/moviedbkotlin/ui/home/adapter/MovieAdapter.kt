@@ -24,13 +24,13 @@ class MovieAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
         when (viewType) {
-            R.layout.item_popular_network_state -> {
+            R.layout.item_network_state -> {
                 MovieNetworkStateViewHolder.create(parent, actionListener)
             }
-            R.layout.item_popular_movie -> {
+            R.layout.item_movie -> {
                 MovieViewHolder.create(parent, actionListener)
             }
-            R.layout.item_first_popular_movie -> {
+            R.layout.item_first_movie -> {
                 FirstPopularMovieViewHolder.create(parent, actionListener)
             }
             else -> {
@@ -40,13 +40,13 @@ class MovieAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position)) {
-            R.layout.item_popular_movie -> {
+            R.layout.item_movie -> {
                 (holder as MovieViewHolder).bindView(getItem(position) ?: Movie())
             }
-            R.layout.item_first_popular_movie -> {
+            R.layout.item_first_movie -> {
                 (holder as FirstPopularMovieViewHolder).bindView(getItem(position) ?: Movie())
             }
-            R.layout.item_popular_network_state -> {
+            R.layout.item_network_state -> {
                 (holder as MovieNetworkStateViewHolder).bindView()
             }
             else -> {
@@ -57,12 +57,12 @@ class MovieAdapter(
 
     override fun getItemViewType(position: Int): Int =
         if (hasExtraRow() && position == itemCount - 1) {
-            R.layout.item_popular_network_state
+            R.layout.item_network_state
         } else {
             if (position == 0) {
-                R.layout.item_first_popular_movie
+                R.layout.item_first_movie
             } else {
-                R.layout.item_popular_movie
+                R.layout.item_movie
             }
         }
 

@@ -1,7 +1,9 @@
 package framgia.com.moviedbkotlin.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.GridLayoutManager
 import framgia.com.moviedbkotlin.MainViewModel
 import framgia.com.moviedbkotlin.R
@@ -10,6 +12,7 @@ import framgia.com.moviedbkotlin.databinding.FragmentHomeBinding
 import framgia.com.moviedbkotlin.ui.BaseFragment
 import framgia.com.moviedbkotlin.ui.home.adapter.GeneralGenreAdapter
 import framgia.com.moviedbkotlin.ui.home.adapter.MovieAdapter
+import framgia.com.moviedbkotlin.widget.StartSnapHelper
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 /**
@@ -21,10 +24,10 @@ class HomeFragment :
     BaseFragment<HomeViewModel, FragmentHomeBinding>(),
     HomeNavigator {
 
-    private lateinit var mMovieAdapter: MovieAdapter
-
     private val mainViewModel: MainViewModel by sharedViewModel()
     override val viewModel: HomeViewModel by sharedViewModel()
+
+    private lateinit var mMovieAdapter: MovieAdapter
 
     override val layoutId: Int = R.layout.fragment_home
 
@@ -42,8 +45,9 @@ class HomeFragment :
 
             }
 
-            override fun clickPopularMovieItem(movie: Movie) {
-
+            override fun onClickMovie(movie: Movie) {
+                NavHostFragment.findNavController(this@HomeFragment)
+                    .navigate(R.id.action_home_to_movie_detail)
             }
         })
         binding.recyclerMovie.apply {
@@ -53,21 +57,28 @@ class HomeFragment :
             scrollToPosition(viewModel.popularMovieScrollPosition)
             with(layoutManager as GridLayoutManager) {
                 spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-                    override fun getSpanSize(position: Int): Int = if (position == 0) 2 else 1
+                    override fun getSpanSize(position: Int): Int =
+                        if (position == 0) SPAN_SIZE_ONE_COUNT else SPAN_SIZE_TWO_COUNT
                 }
             }
-            // StartSnapHelper().attachToRecyclerView(this)
+            StartSnapHelper().attachToRecyclerView(this)
         }
     }
 
     private fun setupGeneralGenreList() {
-        val generalGenreActionListener = object : GeneralGenreActionListener {
+        val listener = object : GeneralGenreActionListener {
 
-            override fun clickToGeneralGenre(value: String) {
-
+            override fun onClickGeneralGenre(position: Int) {
+                when (position) {
+                    0 -> viewModel.loadPopularMovies()
+                    1 -> viewModel.loadTopRateMovies()
+                    2 -> viewModel.loadNowPlayingMovies()
+                    3 -> viewModel.loadUpcomingMovies()
+                    else -> throw IllegalArgumentException("Unknown position: $position")
+                }
             }
         }
-        val generalGenreAdapter = GeneralGenreAdapter(generalGenreActionListener)
+        val generalGenreAdapter = GeneralGenreAdapter(listener)
         binding.recyclerGeneralMovieGenre.adapter = generalGenreAdapter
         // Get general genre from resource. Later, we can do multi language.
         val generalGenres = listOf(
@@ -85,11 +96,14 @@ class HomeFragment :
         })
         viewModel.apply {
             // ViewModel call init when setVariable in onViewCreated() before adapter is initialized
-            popularMovies.observe(viewLifecycleOwner, Observer {
+            movies.observe(viewLifecycleOwner, Observer {
                 mMovieAdapter.submitList(it)
             })
-            networkState.observe(viewLifecycleOwner, Observer {
+            movieNetworkState.observe(viewLifecycleOwner, Observer {
                 mMovieAdapter.setNetworkState(it)
+            })
+            genres.observe(viewLifecycleOwner, Observer {
+
             })
         }
     }
@@ -103,5 +117,11 @@ class HomeFragment :
 
     override fun finishApp() {
         activity?.finish()
+    }
+
+    companion object {
+
+        private const val SPAN_SIZE_TWO_COUNT = 1
+        private const val SPAN_SIZE_ONE_COUNT = 2
     }
 }

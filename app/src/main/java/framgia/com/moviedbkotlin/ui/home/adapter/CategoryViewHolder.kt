@@ -17,23 +17,22 @@ class GeneralGenreViewHolder(
     private val generalGenreActionListener: GeneralGenreActionListener
 ) : RecyclerView.ViewHolder(binding.root) {
 
+    var isSeparatorVisible = false
+
     fun bindView(item: String) {
         binding.apply {
             general = item
+            separatorVisibility = isSeparatorVisible
+            position = adapterPosition
             listener = generalGenreActionListener
             executePendingBindings()
         }
     }
 
-    fun hideDecorator() {
-        binding.separator.visibility = View.GONE
-    }
-
     companion object {
 
         fun create(
-            parent: ViewGroup,
-            listener: GeneralGenreActionListener
+            parent: ViewGroup, listener: GeneralGenreActionListener
         ): GeneralGenreViewHolder {
             val binding =
                 ItemGeneralGenreBinding.inflate(LayoutInflater.from(parent.context), parent, false)

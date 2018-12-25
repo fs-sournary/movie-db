@@ -10,17 +10,15 @@ import framgia.com.moviedbkotlin.ui.home.GeneralGenreActionListener
  * By: Sang
  * Description:
  */
-class GeneralGenreAdapter(private val listener: GeneralGenreActionListener) :
+class GeneralGenreAdapter(private val generalGenreListener: GeneralGenreActionListener) :
     ListAdapter<String, GeneralGenreViewHolder>(GENERAL_GENRE_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GeneralGenreViewHolder =
-        GeneralGenreViewHolder.create(parent, listener)
+        GeneralGenreViewHolder.create(parent, generalGenreListener)
 
     override fun onBindViewHolder(holder: GeneralGenreViewHolder, position: Int) {
+        holder.isSeparatorVisible = position != itemCount - 1
         holder.bindView(getItem(position))
-        if (position == itemCount - 1){
-            holder.hideDecorator()
-        }
     }
 
     companion object {

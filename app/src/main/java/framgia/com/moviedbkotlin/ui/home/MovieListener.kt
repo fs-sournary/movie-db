@@ -11,5 +11,5 @@ interface HomeActionListener {
 
     fun retry()
 
-    fun clickPopularMovieItem(movie: Movie)
+    fun onClickMovie(movie: Movie)
 }

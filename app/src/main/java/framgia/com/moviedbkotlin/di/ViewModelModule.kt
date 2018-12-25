@@ -4,6 +4,7 @@ import framgia.com.moviedbkotlin.MainViewModel
 import framgia.com.moviedbkotlin.ui.account.AccountViewModel
 import framgia.com.moviedbkotlin.ui.home.HomeViewModel
 import framgia.com.moviedbkotlin.ui.library.LibraryViewModel
+import framgia.com.moviedbkotlin.ui.moviedetail.MovieDetailViewModel
 import framgia.com.moviedbkotlin.ui.watchlist.WatchListViewModel
 import org.koin.androidx.viewmodel.experimental.builder.viewModel
 import org.koin.dsl.module.module
@@ -21,4 +22,5 @@ val viewModelModule = module {
     viewModel<LibraryViewModel>()
     viewModel<WatchListViewModel>()
     viewModel<AccountViewModel>()
+    viewModel<MovieDetailViewModel>()
 }

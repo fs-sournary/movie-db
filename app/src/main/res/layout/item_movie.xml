@@ -12,6 +12,10 @@
             type="framgia.com.moviedbkotlin.data.Movie" />
 
         <variable
+            name="placeHolder"
+            type="android.graphics.drawable.Drawable" />
+
+        <variable
             name="userActionListener"
             type="framgia.com.moviedbkotlin.ui.home.HomeActionListener" />
     </data>
@@ -20,12 +24,13 @@
         android:layout_width="@dimen/dp_112"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/dp_4"
-        android:onClick="@{() -> userActionListener.clickPopularMovieItem(movie)}">
+        android:onClick="@{() -> userActionListener.onClickMovie(movie)}">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/image_thumbnail"
             centerCrop="@{true}"
             imageUrl="@{BuildConfig.BASE_IMAGE_URL + `/` + movie.posterPath}"
+            placeHolder="@{placeHolder}"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"

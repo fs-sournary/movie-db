@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import framgia.com.moviedbkotlin.data.Movie
-import framgia.com.moviedbkotlin.databinding.ItemFirstPopularMovieBinding
-import framgia.com.moviedbkotlin.ui.home.HomeActionListener
+import framgia.com.moviedbkotlin.databinding.ItemFirstMovieBinding
+import framgia.com.moviedbkotlin.ui.home.MovieListener
 
 /**
  * Created: 17/12/2018
@@ -13,8 +13,8 @@ import framgia.com.moviedbkotlin.ui.home.HomeActionListener
  * Description:
  */
 class FirstPopularMovieViewHolder(
-    private val binding: ItemFirstPopularMovieBinding,
-    private val listener: HomeActionListener
+    private val binding: ItemFirstMovieBinding,
+    private val listener: MovieListener
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bindView(item: Movie) {
@@ -29,10 +29,13 @@ class FirstPopularMovieViewHolder(
 
         fun create(
             parent: ViewGroup,
-            listener: HomeActionListener
+            listener: MovieListener
         ): FirstPopularMovieViewHolder {
-            val binding =
-                ItemFirstPopularMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            val binding = ItemFirstMovieBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
             return FirstPopularMovieViewHolder(binding, listener)
         }
     }
