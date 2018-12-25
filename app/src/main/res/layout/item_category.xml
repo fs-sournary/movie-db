@@ -20,7 +20,7 @@
 
         <variable
             name="listener"
-            type="framgia.com.moviedbkotlin.ui.home.GeneralGenreActionListener" />
+            type="framgia.com.moviedbkotlin.ui.home.CategoryListener" />
     </data>
 
     <LinearLayout

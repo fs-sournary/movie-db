@@ -12,15 +12,19 @@
             type="framgia.com.moviedbkotlin.data.Movie" />
 
         <variable
+            name="placeHolder"
+            type="android.graphics.drawable.Drawable" />
+
+        <variable
             name="userActionListener"
-            type="framgia.com.moviedbkotlin.ui.home.HomeActionListener" />
+            type="framgia.com.moviedbkotlin.ui.home.MovieListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="@dimen/dp_240"
         android:layout_height="match_parent"
-        android:layout_marginEnd="@dimen/dp_4"
         android:layout_marginTop="@dimen/dp_4"
+        android:layout_marginEnd="@dimen/dp_4"
         android:layout_marginBottom="@dimen/dp_4"
         android:onClick="@{() -> userActionListener.onClickMovie(movie)}">
 
@@ -28,6 +32,7 @@
             android:id="@+id/image_thumbnail"
             centerCrop="@{true}"
             imageUrl="@{BuildConfig.BASE_IMAGE_URL + `/` + movie.posterPath}"
+            placeHolder="@{placeHolder}"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"

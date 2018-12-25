@@ -1,7 +1,9 @@
 package framgia.com.moviedbkotlin.repository
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations.switchMap
 import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import framgia.com.moviedbkotlin.api.MovieApi
 import framgia.com.moviedbkotlin.data.Movie
 import framgia.com.moviedbkotlin.repository.movie.NowPlayingMovieDataSource
@@ -22,32 +24,32 @@ class MovieRepository(
     private val networkExecutor: Executor
 ) {
 
-    fun getPopularMovies(): PagingResult<Movie> {
+    fun getPopularMovies(): NetworkResource<LiveData<PagedList<Movie>>> {
         val sourceFactory =
             PopularMoviesDataSource.Factory(movieApi, schedulerProvider, networkExecutor)
         val livePagedList = LivePagedListBuilder(sourceFactory, Constants.PAGE_SIZE)
             .setFetchExecutor(networkExecutor)
             .build()
         val sourceData = sourceFactory.sourceLiveData
-        return PagingResult(
-            pagedList = livePagedList,
-            networkState = switchMap(sourceData) { it.initialLoadState },
-            refreshState = switchMap(sourceData) { it.networkState },
+        return NetworkResource(
+            data = livePagedList,
+            networkState = switchMap(sourceData) { it.networkState },
+            refreshState = switchMap(sourceData) { it.initialLoadState },
             refresh = { sourceData.value?.invalidate() },
             retry = { sourceData.value?.retryWhenAllFailed() },
             clear = { sourceData.value?.clear() }
         )
     }
 
-    fun getTopRateMovies(): PagingResult<Movie> {
+    fun getTopRateMovies(): NetworkResource<LiveData<PagedList<Movie>>> {
         val sourceFactory =
             TopRateMovieDataSource.Factory(movieApi, schedulerProvider, networkExecutor)
         val livePagedList = LivePagedListBuilder(sourceFactory, Constants.PAGE_SIZE)
             .setFetchExecutor(networkExecutor)
             .build()
         val sourceData = sourceFactory.sourceLiveData
-        return PagingResult(
-            pagedList = livePagedList,
+        return NetworkResource(
+            data = livePagedList,
             networkState = switchMap(sourceData) { it.networkState },
             refreshState = switchMap(sourceData) { it.initialState },
             refresh = { sourceData.value?.invalidate() },
@@ -56,15 +58,15 @@ class MovieRepository(
         )
     }
 
-    fun getUpcomingMovies(): PagingResult<Movie> {
+    fun getUpcomingMovies(): NetworkResource<LiveData<PagedList<Movie>>> {
         val sourceFactory =
             UpcomingMovieDataSource.Factory(movieApi, schedulerProvider, networkExecutor)
         val livePagedList = LivePagedListBuilder(sourceFactory, Constants.PAGE_SIZE)
             .setFetchExecutor(networkExecutor)
             .build()
         val sourceData = sourceFactory.sourceLiveData
-        return PagingResult(
-            pagedList = livePagedList,
+        return NetworkResource(
+            data = livePagedList,
             networkState = switchMap(sourceData) { it.networkState },
             refreshState = switchMap(sourceData) { it.initialState },
             refresh = { sourceData.value?.invalidate() },
@@ -73,15 +75,15 @@ class MovieRepository(
         )
     }
 
-    fun getNowPlayingMovies(): PagingResult<Movie> {
+    fun getNowPlayingMovies(): NetworkResource<LiveData<PagedList<Movie>>> {
         val sourceFactory =
             NowPlayingMovieDataSource.Factory(movieApi, schedulerProvider, networkExecutor)
         val livePageList = LivePagedListBuilder(sourceFactory, Constants.PAGE_SIZE)
             .setFetchExecutor(networkExecutor)
             .build()
         val sourceData = sourceFactory.sourceLiveData
-        return PagingResult(
-            pagedList = livePageList,
+        return NetworkResource(
+            data = livePageList,
             networkState = switchMap(sourceData) { it.networkState },
             refreshState = switchMap(sourceData) { it.initialState },
             refresh = { sourceData.value?.invalidate() },

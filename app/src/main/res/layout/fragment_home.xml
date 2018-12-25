@@ -66,7 +66,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_browser_movie"
-            tools:listitem="@layout/item_general_genre" />
+            tools:listitem="@layout/item_category" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_movie"

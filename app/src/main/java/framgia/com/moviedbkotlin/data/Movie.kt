@@ -29,7 +29,7 @@ data class Movie(
     var posterPath: String? = null,
     @SerializedName("budget")
     var budget: Int? = null,
-    @SerializedName("genres")
+    @SerializedName("_genres")
     @Ignore
     var genres: List<Genre>? = null,
     @SerializedName("homepage")

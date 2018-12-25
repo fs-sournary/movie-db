@@ -17,7 +17,7 @@
 
         <variable
             name="userActionListener"
-            type="framgia.com.moviedbkotlin.ui.home.HomeActionListener" />
+            type="framgia.com.moviedbkotlin.ui.home.MovieListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

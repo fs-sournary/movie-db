@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import framgia.com.moviedbkotlin.R
 import framgia.com.moviedbkotlin.data.Movie
 import framgia.com.moviedbkotlin.repository.NetworkState
-import framgia.com.moviedbkotlin.ui.home.HomeActionListener
+import framgia.com.moviedbkotlin.ui.home.MovieListener
 import java.util.concurrent.Executors
 
 /**
@@ -17,7 +17,7 @@ import java.util.concurrent.Executors
  * Description:
  */
 class MovieAdapter(
-    private val actionListener: HomeActionListener
+    private val listener: MovieListener
 ) : PagedListAdapter<Movie, RecyclerView.ViewHolder>(diffUtilCallback) {
 
     private var networkState: NetworkState? = null
@@ -25,13 +25,13 @@ class MovieAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
         when (viewType) {
             R.layout.item_network_state -> {
-                MovieNetworkStateViewHolder.create(parent, actionListener)
+                MovieNetworkStateViewHolder.create(parent, listener)
             }
             R.layout.item_movie -> {
-                MovieViewHolder.create(parent, actionListener)
+                MovieViewHolder.create(parent, listener)
             }
             R.layout.item_first_movie -> {
-                FirstPopularMovieViewHolder.create(parent, actionListener)
+                FirstMovieViewHolder.create(parent, listener)
             }
             else -> {
                 throw IllegalArgumentException("Unknown view type: $viewType")
@@ -44,7 +44,7 @@ class MovieAdapter(
                 (holder as MovieViewHolder).bindView(getItem(position) ?: Movie())
             }
             R.layout.item_first_movie -> {
-                (holder as FirstPopularMovieViewHolder).bindView(getItem(position) ?: Movie())
+                (holder as FirstMovieViewHolder).bindView(getItem(position) ?: Movie())
             }
             R.layout.item_network_state -> {
                 (holder as MovieNetworkStateViewHolder).bindView()

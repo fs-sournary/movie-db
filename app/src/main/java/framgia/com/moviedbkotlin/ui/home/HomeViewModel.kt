@@ -1,9 +1,12 @@
 package framgia.com.moviedbkotlin.ui.home
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations.map
 import androidx.lifecycle.Transformations.switchMap
 import androidx.lifecycle.ViewModel
+import androidx.paging.PagedList
+import framgia.com.moviedbkotlin.data.Genre
 import framgia.com.moviedbkotlin.data.Movie
 import framgia.com.moviedbkotlin.repository.*
 
@@ -18,21 +21,20 @@ class HomeViewModel(
 ) : ViewModel() {
 
     // Save scroll position of RecyclerView after it is stop or destroy
-    var popularMovieScrollPosition: Int = 0
+    var movieScrollPosition: Int = 0
 
     // Movie
-    private var movieResult = MutableLiveData<PagingResult<Movie>>()
-    val movies = switchMap(movieResult) { it.pagedList }!!
+    private var movieResult = MutableLiveData<NetworkResource<LiveData<PagedList<Movie>>>>()
+    val movies = switchMap(movieResult) { it.data }!!
     val movieNetworkState = switchMap(movieResult) { it.networkState }!!
     private val movieRefreshState = switchMap(movieResult) { it.refreshState }
     val isShowLoading = map(movieRefreshState) { it == NetworkState.RUNNING }!!
 
     // Genre
-    private var genreResult = MutableLiveData<GenreResult>()
+    private var genreResult = MutableLiveData<NetworkResource<LiveData<List<Genre>>>>()
     val genres = switchMap(genreResult) { it.data }!!
 
-    init {
-        movieResult.value = movieRepository.getPopularMovies()
+    fun loadGenres(){
         genreResult.value = genreRepository.getGenres()
     }
 

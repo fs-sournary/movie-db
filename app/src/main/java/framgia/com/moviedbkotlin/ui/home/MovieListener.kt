@@ -7,7 +7,7 @@ import framgia.com.moviedbkotlin.data.Movie
  * By: Sang
  * Description:
  */
-interface HomeActionListener {
+interface MovieListener {
 
     fun retry()
 

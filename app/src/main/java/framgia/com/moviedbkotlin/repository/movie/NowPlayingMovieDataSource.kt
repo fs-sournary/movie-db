@@ -1,5 +1,6 @@
 package framgia.com.moviedbkotlin.repository.movie
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
 import androidx.paging.PageKeyedDataSource
@@ -25,8 +26,11 @@ class NowPlayingMovieDataSource(
     private var retry: (() -> Unit)? = null
     private val compositeDisposable = CompositeDisposable()
 
-    val initialState = MutableLiveData<NetworkState>()
-    val networkState = MutableLiveData<NetworkState>()
+    private val _initialState = MutableLiveData<NetworkState>()
+    private val _networkState = MutableLiveData<NetworkState>()
+
+    val initialState: LiveData<NetworkState> = _initialState
+    val networkState: LiveData<NetworkState> = _networkState
 
     fun retryWhenAllFailed() {
         val preRetry = retry
@@ -41,22 +45,22 @@ class NowPlayingMovieDataSource(
     override fun loadInitial(
         params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, Movie>
     ) {
-        initialState.postValue(NetworkState.RUNNING)
-        networkState.postValue(NetworkState.RUNNING)
+        _initialState.postValue(NetworkState.RUNNING)
+        _networkState.postValue(NetworkState.RUNNING)
         val disposable = movieApi.getNowPlayingMovies(Constants.INIT_PAGE)
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.ui())
             .subscribe(
                 {
-                    initialState.postValue(NetworkState.SUCCESS)
-                    networkState.postValue(NetworkState.SUCCESS)
+                    _initialState.postValue(NetworkState.SUCCESS)
+                    _networkState.postValue(NetworkState.SUCCESS)
                     retry = null
                     callback.onResult(it.results, null, Constants.INIT_PAGE + 1)
                 },
                 {
                     val error = NetworkState.error(it.message ?: Constants.DEFAULT_ERROR)
-                    initialState.postValue(error)
-                    networkState.postValue(error)
+                    _initialState.postValue(error)
+                    _networkState.postValue(error)
                     retry = { loadInitial(params, callback) }
                 }
             )
@@ -64,13 +68,13 @@ class NowPlayingMovieDataSource(
     }
 
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Movie>) {
-        networkState.postValue(NetworkState.RUNNING)
+        _networkState.postValue(NetworkState.RUNNING)
         val disposable = movieApi.getNowPlayingMovies(params.key)
             .subscribeOn(schedulerProvider.io())
             .observeOn(schedulerProvider.ui())
             .subscribe(
                 {
-                    networkState.postValue(NetworkState.SUCCESS)
+                    _networkState.postValue(NetworkState.SUCCESS)
                     retry = null
                     val data = it.results
                     val nextPage = if (it.totalPages == params.key) null else params.key + 1
@@ -78,7 +82,7 @@ class NowPlayingMovieDataSource(
                 },
                 {
                     val error = NetworkState.error(it.message ?: Constants.DEFAULT_ERROR)
-                    networkState.postValue(error)
+                    _networkState.postValue(error)
                     retry = { loadAfter(params, callback) }
                 }
             )
@@ -95,11 +99,13 @@ class NowPlayingMovieDataSource(
         private val networkExecutor: Executor
     ) : DataSource.Factory<Int, Movie>() {
 
-        val sourceLiveData = MutableLiveData<NowPlayingMovieDataSource>()
+        private val _sourceLiveData = MutableLiveData<NowPlayingMovieDataSource>()
+
+        val sourceLiveData: LiveData<NowPlayingMovieDataSource> = _sourceLiveData
 
         override fun create(): DataSource<Int, Movie> {
             val source = NowPlayingMovieDataSource(movieApi, schedulerProvider, networkExecutor)
-            sourceLiveData.postValue(source)
+            _sourceLiveData.postValue(source)
             return source
         }
     }

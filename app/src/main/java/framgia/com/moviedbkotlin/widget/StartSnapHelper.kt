@@ -1,6 +1,5 @@
 package framgia.com.moviedbkotlin.widget
 
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.*
 
@@ -77,15 +76,10 @@ class StartSnapHelper : LinearSnapHelper() {
                             child
                         } else {
                             when {
-                                findLastCompletelyVisibleItemPosition() == itemCount - 1 -> {
-                                    null
-                                }
-                                firstVisibleItemPosition == 0 -> {
+                                findLastCompletelyVisibleItemPosition() == itemCount - 1 -> null
+                                firstVisibleItemPosition == 0 ->
                                     findViewByPosition(firstVisibleItemPosition + 1)
-                                }
-                                else -> {
-                                    findViewByPosition(firstVisibleItemPosition + 2)
-                                }
+                                else -> findViewByPosition(firstVisibleItemPosition + 2)
                             }
                         }
                     }

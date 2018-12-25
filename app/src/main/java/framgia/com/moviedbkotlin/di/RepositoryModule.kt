@@ -19,5 +19,5 @@ val remoteDataSourceModule = module {
 
 val repositoryModule = module {
     single { MovieRepository(get(), get(), get()) }
-    single { GenreRepository(get()) }
+    single { GenreRepository(get(), get()) }
 }

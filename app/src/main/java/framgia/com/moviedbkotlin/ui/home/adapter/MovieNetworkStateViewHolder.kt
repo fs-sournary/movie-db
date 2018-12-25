@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import framgia.com.moviedbkotlin.databinding.ItemNetworkStateBinding
-import framgia.com.moviedbkotlin.ui.home.HomeActionListener
+import framgia.com.moviedbkotlin.ui.home.MovieListener
 
 /**
  * Created: 17/12/2018
@@ -13,7 +13,7 @@ import framgia.com.moviedbkotlin.ui.home.HomeActionListener
  */
 class MovieNetworkStateViewHolder(
     private val binding: ItemNetworkStateBinding,
-    private val listener: HomeActionListener
+    private val listener: MovieListener
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bindView() {
@@ -25,7 +25,7 @@ class MovieNetworkStateViewHolder(
 
     companion object {
 
-        fun create(parent: ViewGroup, listener: HomeActionListener): MovieNetworkStateViewHolder {
+        fun create(parent: ViewGroup, listener: MovieListener): MovieNetworkStateViewHolder {
             val binding = ItemNetworkStateBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,

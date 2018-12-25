@@ -1,20 +1,19 @@
 package framgia.com.moviedbkotlin.ui.home.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import framgia.com.moviedbkotlin.databinding.ItemGeneralGenreBinding
-import framgia.com.moviedbkotlin.ui.home.GeneralGenreActionListener
+import framgia.com.moviedbkotlin.databinding.ItemCategoryBinding
+import framgia.com.moviedbkotlin.ui.home.CategoryListener
 
 /**
  * Created: 18/12/2018
  * By: Sang
  * Description:
  */
-class GeneralGenreViewHolder(
-    private val binding: ItemGeneralGenreBinding,
-    private val generalGenreActionListener: GeneralGenreActionListener
+class CategoryViewHolder(
+    private val binding: ItemCategoryBinding,
+    private val categoryListener: CategoryListener
 ) : RecyclerView.ViewHolder(binding.root) {
 
     var isSeparatorVisible = false
@@ -24,7 +23,7 @@ class GeneralGenreViewHolder(
             general = item
             separatorVisibility = isSeparatorVisible
             position = adapterPosition
-            listener = generalGenreActionListener
+            listener = categoryListener
             executePendingBindings()
         }
     }
@@ -32,11 +31,11 @@ class GeneralGenreViewHolder(
     companion object {
 
         fun create(
-            parent: ViewGroup, listener: GeneralGenreActionListener
-        ): GeneralGenreViewHolder {
+            parent: ViewGroup, listener: CategoryListener
+        ): CategoryViewHolder {
             val binding =
-                ItemGeneralGenreBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-            return GeneralGenreViewHolder(binding, listener)
+                ItemCategoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            return CategoryViewHolder(binding, listener)
         }
     }
 }
