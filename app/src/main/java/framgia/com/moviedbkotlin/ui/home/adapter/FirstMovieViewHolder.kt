@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import framgia.com.moviedbkotlin.data.Movie
-import framgia.com.moviedbkotlin.databinding.ItemMovieBinding
+import framgia.com.moviedbkotlin.databinding.ItemFirstMovieBinding
 import framgia.com.moviedbkotlin.ui.home.MovieListener
 
 /**
@@ -14,8 +14,8 @@ import framgia.com.moviedbkotlin.ui.home.MovieListener
  * By: Sang
  * Description:
  */
-class MovieViewHolder(
-    private val binding: ItemMovieBinding,
+class FirstMovieViewHolder(
+    private val binding: ItemFirstMovieBinding,
     private val listener: MovieListener
 ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -37,10 +37,16 @@ class MovieViewHolder(
 
     companion object {
 
-        fun create(parent: ViewGroup, listener: MovieListener): MovieViewHolder {
-            val binding =
-                ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-            return MovieViewHolder(binding, listener)
+        fun create(
+            parent: ViewGroup,
+            listener: MovieListener
+        ): FirstMovieViewHolder {
+            val binding = ItemFirstMovieBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+            return FirstMovieViewHolder(binding, listener)
         }
     }
 }

@@ -5,7 +5,7 @@ package framgia.com.moviedbkotlin.ui.home
  * By: Sang
  * Description:
  */
-interface GeneralGenreActionListener {
+interface CategoryListener {
 
-    fun clickToGeneralGenre(value: String)
+    fun onClickGeneralGenre(position: Int)
 }

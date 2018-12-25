@@ -1,10 +1,7 @@
 package framgia.com.moviedbkotlin.widget
 
 import android.view.View
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.LinearSnapHelper
-import androidx.recyclerview.widget.OrientationHelper
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.*
 
 /**
  * Created: 18/12/2018
@@ -59,6 +56,36 @@ class StartSnapHelper : LinearSnapHelper() {
         helper: OrientationHelper
     ): View? =
         when (layoutManager) {
+            is GridLayoutManager -> {
+                with(layoutManager) {
+                    // Layout Manager is GridLayoutManager with spanCount = 2, spanSize of 0 is 2
+                    if (spanCount == 2
+                        && spanSizeLookup.getSpanSize(0) == 2
+                        && orientation == OrientationHelper.HORIZONTAL
+                    ) {
+                        val firstVisibleItemPosition = findFirstVisibleItemPosition()
+                        val isLastItem = findLastCompletelyVisibleItemPosition() == itemCount - 1
+                        if (firstVisibleItemPosition == RecyclerView.NO_POSITION || isLastItem) {
+                            return null
+                        }
+                        val child = findViewByPosition(firstVisibleItemPosition)
+                        return if (
+                            helper.getDecoratedEnd(child) >= helper.getDecoratedMeasurement(child) / 2
+                            && helper.getDecoratedEnd(child) > 0
+                        ) {
+                            child
+                        } else {
+                            when {
+                                findLastCompletelyVisibleItemPosition() == itemCount - 1 -> null
+                                firstVisibleItemPosition == 0 ->
+                                    findViewByPosition(firstVisibleItemPosition + 1)
+                                else -> findViewByPosition(firstVisibleItemPosition + 2)
+                            }
+                        }
+                    }
+                    return null
+                }
+            }
             is LinearLayoutManager -> {
                 with(layoutManager) {
                     val firstVisibleItemPosition = findFirstVisibleItemPosition()

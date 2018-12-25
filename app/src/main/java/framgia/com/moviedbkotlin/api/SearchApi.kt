@@ -1,6 +1,7 @@
 package framgia.com.moviedbkotlin.api
 
 import framgia.com.moviedbkotlin.data.Movie
+import framgia.com.moviedbkotlin.repository.Constants
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -10,14 +11,13 @@ import retrofit2.http.Query
  * By: Sang
  * Description:
  */
-private const val PARAM_PAGE = "page"
-private const val PARAM_QUERY = "query"
+
 
 interface SearchApi {
 
     @GET("search/movie")
     fun getSearchMovies(
-        @Query(PARAM_QUERY) query: String,
-        @Query(PARAM_PAGE) page: Int
+        @Query(Constants.PARAM_QUERY) query: String,
+        @Query(Constants.PARAM_PAGE) page: Int
     ): Observable<ListResponse<Movie>>
 }

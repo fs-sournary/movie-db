@@ -17,7 +17,7 @@ interface GenreApi {
 }
 
 
-class GenreResponse(
-    @SerializedName("genres")
+data class GenreResponse(
+    @SerializedName("_genres")
     var genres: List<Genre> = listOf()
 )

@@ -21,7 +21,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setupToolbar()
         setupBottomNav()
+    }
+
+    private fun setupToolbar(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             toolbar.title = Html.fromHtml(
                 getString(R.string.toolbar_main_title),

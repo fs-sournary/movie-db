@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import framgia.com.moviedbkotlin.R
 import framgia.com.moviedbkotlin.data.Movie
 import framgia.com.moviedbkotlin.repository.NetworkState
-import framgia.com.moviedbkotlin.ui.home.HomeActionListener
+import framgia.com.moviedbkotlin.ui.home.MovieListener
 import java.util.concurrent.Executors
 
 /**
@@ -17,21 +17,21 @@ import java.util.concurrent.Executors
  * Description:
  */
 class MovieAdapter(
-    private val actionListener: HomeActionListener
+    private val listener: MovieListener
 ) : PagedListAdapter<Movie, RecyclerView.ViewHolder>(diffUtilCallback) {
 
     private var networkState: NetworkState? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
         when (viewType) {
-            R.layout.item_popular_network_state -> {
-                MovieNetworkStateViewHolder.create(parent, actionListener)
+            R.layout.item_network_state -> {
+                MovieNetworkStateViewHolder.create(parent, listener)
             }
-            R.layout.item_popular_movie -> {
-                MovieViewHolder.create(parent, actionListener)
+            R.layout.item_movie -> {
+                MovieViewHolder.create(parent, listener)
             }
-            R.layout.item_first_popular_movie -> {
-                FirstPopularMovieViewHolder.create(parent, actionListener)
+            R.layout.item_first_movie -> {
+                FirstMovieViewHolder.create(parent, listener)
             }
             else -> {
                 throw IllegalArgumentException("Unknown view type: $viewType")
@@ -40,13 +40,13 @@ class MovieAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (getItemViewType(position)) {
-            R.layout.item_popular_movie -> {
+            R.layout.item_movie -> {
                 (holder as MovieViewHolder).bindView(getItem(position) ?: Movie())
             }
-            R.layout.item_first_popular_movie -> {
-                (holder as FirstPopularMovieViewHolder).bindView(getItem(position) ?: Movie())
+            R.layout.item_first_movie -> {
+                (holder as FirstMovieViewHolder).bindView(getItem(position) ?: Movie())
             }
-            R.layout.item_popular_network_state -> {
+            R.layout.item_network_state -> {
                 (holder as MovieNetworkStateViewHolder).bindView()
             }
             else -> {
@@ -57,12 +57,12 @@ class MovieAdapter(
 
     override fun getItemViewType(position: Int): Int =
         if (hasExtraRow() && position == itemCount - 1) {
-            R.layout.item_popular_network_state
+            R.layout.item_network_state
         } else {
             if (position == 0) {
-                R.layout.item_first_popular_movie
+                R.layout.item_first_movie
             } else {
-                R.layout.item_popular_movie
+                R.layout.item_movie
             }
         }
 

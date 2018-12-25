@@ -1,6 +1,8 @@
 package framgia.com.moviedbkotlin.di
 
-import framgia.com.moviedbkotlin.repository.popularmovie.PopularMoviesRepository
+import framgia.com.moviedbkotlin.repository.GenreRepository
+import framgia.com.moviedbkotlin.repository.MovieRepository
+import framgia.com.moviedbkotlin.repository.genre.GenreDataSource
 import org.koin.dsl.module.module
 
 /**
@@ -9,12 +11,13 @@ import org.koin.dsl.module.module
  * Description:
  */
 val localDataSourceModule = module {
-
+    single { GenreDataSource(get(), get()) }
 }
 
 val remoteDataSourceModule = module {
 }
 
 val repositoryModule = module {
-    single { PopularMoviesRepository(get(), get()) }
+    single { MovieRepository(get(), get(), get()) }
+    single { GenreRepository(get(), get()) }
 }
